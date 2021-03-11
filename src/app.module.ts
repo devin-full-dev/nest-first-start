@@ -24,7 +24,5 @@ import * as Constants from './common/constants/config';
     DatabaseModule,
     UserModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

@@ -12,13 +12,31 @@ class User {
   public lastName: string;
 
   @Column()
-  public userName: string;
+  public username: string;
 
   @Column()
   public password: string;
 
-  @Column()
+  @Column({ unique: true, nullable: true })
   public email: string;
+
+  @Column('date')
+  public dateOfBirth: Date;
+
+  @Column({ nullable: true })
+  public profileImage: string;
+
+  @Column()
+  public status: number;
+
+  @Column()
+  public active: boolean;
+
+  @Column('timestamp')
+  public createdAt: Date;
+
+  @Column('timestamp')
+  public updatedAt: Date;
 }
 
 export default User;
