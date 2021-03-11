@@ -7,7 +7,7 @@ import { DatabaseModule } from './config/database.module';
 import { UserModule } from './modules/user/user.module';
 
 // Constants
-import * as Constants from './constants/config';
+import * as Constants from './common/constants/config';
 
 @Module({
   imports: [

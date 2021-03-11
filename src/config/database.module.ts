@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 // Constants
-import * as Constants from '../constants/config';
+import * as Constants from '../common/constants/config';
 
 @Module({
   imports: [
