@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-class User {
+export class User {
   @PrimaryGeneratedColumn()
   public id: number;
 
@@ -38,5 +38,3 @@ class User {
   @Column('timestamp')
   public updatedAt: Date;
 }
-
-export default User;

@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Api Prefix
-  app.setGlobalPrefix('/api/v1');
+  app.setGlobalPrefix('api');
 
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
