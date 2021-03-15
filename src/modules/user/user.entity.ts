@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -29,12 +35,12 @@ export class User {
   @Column({ type: 'int', default: 1 })
   public status: number;
 
-  @Column()
+  @Column({ default: true })
   public active: boolean;
 
-  @Column('timestamp')
+  @CreateDateColumn()
   public createdAt: Date;
 
-  @Column('timestamp')
+  @UpdateDateColumn()
   public updatedAt: Date;
 }
