@@ -26,7 +26,7 @@ export class User {
   @Column({ nullable: true })
   public profileImage: string;
 
-  @Column()
+  @Column({ type: 'int', default: 1 })
   public status: number;
 
   @Column()
