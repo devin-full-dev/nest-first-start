@@ -4,6 +4,6 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly _userService: UserService) {}
 
-  @Get()
-  createUser(): string {}
+  @Post()
+  registerUser(user): Promise {}
 }
