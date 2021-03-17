@@ -44,13 +44,14 @@ export class UserService {
   async getUserCredential(userDto: LoginDto): Promise<User> {
     const { username, password } = userDto;
     const user = await this._userRepository.findOne({
-      where: [{ username, password }],
+      where: [{ username }, { email: username }],
     });
     const hashedPassword = user?.password;
     const isValidPassword = BaseUtils.verifyHash(password, hashedPassword);
     if (!user || !isValidPassword) {
       throw new UserNotFoundException('User Does Not Exist');
     }
+    delete user.password;
     return user;
   }
 }

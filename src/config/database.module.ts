@@ -19,6 +19,7 @@ import * as Constants from '../common/constants/config';
         port: configService.get(Constants.POSTGRES_PORT),
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
         synchronize: true,
+        logging: true,
       }),
     }),
   ],
