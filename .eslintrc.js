@@ -157,7 +157,7 @@ module.exports = {
             'error',
         ],
         'arrow-body-style': 'error',
-        'complexity': ['warn', 3],
+        'complexity': ['warn', 4],
         'constructor-super': 'error',
         'curly': 'error',
         'dot-notation': 'error',

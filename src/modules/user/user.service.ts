@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 // Exception
-import { UserNotFoundException } from './../../exceptions/user-nofound.exception';
-import { UserConflictException } from './../../exceptions/user-conflict.exception';
+import { NotFound } from '../../exceptions/notfound.exception';
+import { Conflict } from '../../exceptions/conflict.exception';
 
 // User
 import { User } from './user.entity';
@@ -37,7 +37,7 @@ export class UserService {
       delete newUser.password;
       return newUser;
     } else {
-      throw new UserConflictException('Username or Email Already Exist!');
+      throw new Conflict('Username or Email Already Exist!');
     }
   }
 
@@ -47,11 +47,15 @@ export class UserService {
       where: [{ username }, { email: username }],
     });
     const hashedPassword = user?.password;
-    const isValidPassword = BaseUtils.verifyHash(password, hashedPassword);
-    if (!user || !isValidPassword) {
-      throw new UserNotFoundException('User Does Not Exist');
+    const isValidPassword = await BaseUtils.verifyHash(
+      password,
+      hashedPassword,
+    );
+    if (user && isValidPassword) {
+      delete user.password;
+      return user;
+    } else {
+      throw new NotFound('User Does Not Exist');
     }
-    delete user.password;
-    return user;
   }
 }
