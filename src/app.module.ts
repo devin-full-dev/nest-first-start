@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 // Database
 import { DatabaseModule } from './config/database.module';
 import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 // Constants
 import * as Constants from './common/constants/config';
@@ -23,6 +24,7 @@ import * as Constants from './common/constants/config';
     }),
     DatabaseModule,
     UserModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
