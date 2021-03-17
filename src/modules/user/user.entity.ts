@@ -32,6 +32,9 @@ export class User {
   @Column({ nullable: true })
   public profileImage: string;
 
+  @Column({ nullable: true })
+  public phone: string;
+
   @Column({ type: 'int', default: 1 })
   public status: number;
 

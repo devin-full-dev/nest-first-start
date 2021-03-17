@@ -1,4 +1,5 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { UserConflictException } from './../../exceptions/user-conflict.exception';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 // User
@@ -16,13 +17,14 @@ export class UserService {
   async createUser(userRegisterDto: UserRegisterDto): Promise<User> {
     const { email, username } = userRegisterDto;
     const existingUser = await this._userRepository.findOne({
+      select: ['email', 'username'],
       where: [{ email }, { username }],
     });
     if (!existingUser) {
       const user = await this._userRepository.create(userRegisterDto);
       return this._userRepository.save(user);
     } else {
-      throw new HttpException('User Already Exist!!', HttpStatus.CONFLICT);
+      throw new UserConflictException(existingUser?.username);
     }
   }
 }
