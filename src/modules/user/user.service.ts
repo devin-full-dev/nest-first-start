@@ -1,13 +1,12 @@
+import { LoginDto } from './../auth/dto/login.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 // Exception
-import { NotFound } from '../../exceptions/notfound.exception';
 import { Conflict } from '../../exceptions/conflict.exception';
 
 // User
 import { User } from './user.entity';
-import { LoginDto } from './../auth/dto/login.dto';
 import { UserRepository } from './user.repository';
 import { UserRegisterDto } from './dto/user-register.dto';
 
@@ -20,6 +19,12 @@ export class UserService {
     @InjectRepository(UserRepository)
     private readonly _userRepository: UserRepository,
   ) {}
+
+  findOne(user: LoginDto): Promise<User> {
+    return this._userRepository.findOne({
+      where: [{ email: user?.username }, { username: user?.username }],
+    });
+  }
 
   async createUser(userRegisterDto: UserRegisterDto): Promise<User> {
     const { email, username, password } = userRegisterDto;
@@ -38,24 +43,6 @@ export class UserService {
       return newUser;
     } else {
       throw new Conflict('Username or Email Already Exist!');
-    }
-  }
-
-  async getUserCredential(userDto: LoginDto): Promise<User> {
-    const { username, password } = userDto;
-    const user = await this._userRepository.findOne({
-      where: [{ username }, { email: username }],
-    });
-    const hashedPassword = user?.password;
-    const isValidPassword = await BaseUtils.verifyHash(
-      password,
-      hashedPassword,
-    );
-    if (user && isValidPassword) {
-      delete user.password;
-      return user;
-    } else {
-      throw new NotFound('User Does Not Exist');
     }
   }
 }
