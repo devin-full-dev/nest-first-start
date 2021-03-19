@@ -1,10 +1,10 @@
 export class TokenPayLoadDto {
-  expiresIn: Date;
+  expiresAt: Date;
 
   accessToken: string;
 
-  constructor(data: { expiresIn: Date; accessToken: any }) {
-    this.expiresIn = data.expiresIn;
+  constructor(data: { expiresAt: Date; accessToken: any }) {
+    this.expiresAt = data.expiresAt;
     this.accessToken = data.accessToken;
   }
 }

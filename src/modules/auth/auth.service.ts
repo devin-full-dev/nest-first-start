@@ -24,7 +24,7 @@ export class AuthService {
   ) {}
   async generateToken(user: User): Promise<TokenPayLoadDto> {
     return new TokenPayLoadDto({
-      expiresIn: moment().add(10, 'd').toDate(),
+      expiresAt: moment().add(10, 'd').toDate(),
       accessToken: await this._jwtService.signAsync({
         id: user?.id,
         user: user?.username,
