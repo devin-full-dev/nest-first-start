@@ -15,7 +15,6 @@ import * as Constants from './common/constants/config';
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         [Constants.JWT_SECRET_KEY]: Joi.string().required(),
-        [Constants.JWT_EXPIRATION_TIME]: Joi.string().required(),
         [Constants.POSTGRES_HOST]: Joi.string().required(),
         [Constants.POSTGRES_PORT]: Joi.number().required(),
         [Constants.POSTGRES_USER]: Joi.string().required(),

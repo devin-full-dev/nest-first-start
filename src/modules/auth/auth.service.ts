@@ -1,9 +1,13 @@
-import { NotFound } from './../../exceptions/notfound.exception';
-import { BaseUtils } from './../../utils/index';
+import * as moment from 'moment';
+import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { BaseUtils } from './../../utils/index';
+import { NotFound } from './../../exceptions/notfound.exception';
 
 // Service
 import { UserService } from './../user/user.service';
+import { TokenPayLoadDto } from './dto/token-payload.dto';
 
 // DTO
 import { LoginDto } from './dto/login.dto';
@@ -13,7 +17,21 @@ import { User } from './../user/user.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly _userService: UserService) {}
+  constructor(
+    private readonly _jwtService: JwtService,
+    private readonly _userService: UserService,
+    private readonly _configService: ConfigService,
+  ) {}
+  async generateToken(user: User): Promise<TokenPayLoadDto> {
+    return new TokenPayLoadDto({
+      expiresIn: moment().add(10, 'd').toDate(),
+      accessToken: await this._jwtService.signAsync({
+        id: user?.id,
+        user: user?.username,
+        email: user?.email,
+      }),
+    });
+  }
 
   async validateUser(userDto: LoginDto): Promise<User> {
     const user = await this._userService.findOne(userDto);

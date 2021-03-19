@@ -6,6 +6,7 @@ import { UserService } from './../user/user.service';
 
 // Dto
 import { LoginDto } from './dto/login.dto';
+import { LoginPayLoadDto } from './dto/login-payload.dto';
 import { UserRegisterDto } from './../user/dto/user-register.dto';
 
 @Controller('auth')
@@ -22,9 +23,10 @@ export class AuthController {
     return this._userService.createUser(userRegisterDto);
   }
 
-  // @UseGuards(AuthenticationAuthGuard)
   @Post('login')
-  login(@Body() userLogin: LoginDto): Promise<LoginDto> {
-    return this._authService.validateUser(userLogin);
+  async login(@Body() userLogin: LoginDto): Promise<LoginPayLoadDto> {
+    const user = await this._authService.validateUser(userLogin);
+    const token = await this._authService.generateToken(user);
+    return new LoginPayLoadDto(user, token);
   }
 }
