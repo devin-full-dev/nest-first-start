@@ -1,7 +1,6 @@
 import * as moment from 'moment';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { BaseUtils } from './../../utils/index';
 import { NotFound } from './../../exceptions/notfound.exception';
 
@@ -20,7 +19,6 @@ export class AuthService {
   constructor(
     private readonly _jwtService: JwtService,
     private readonly _userService: UserService,
-    private readonly _configService: ConfigService,
   ) {}
   async generateToken(user: User): Promise<TokenPayLoadDto> {
     return new TokenPayLoadDto({
