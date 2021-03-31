@@ -1,6 +1,5 @@
 export class TokenPayLoadDto {
   expiresAt: Date;
-
   accessToken: string;
 
   constructor(data: { expiresAt: Date; accessToken: any }) {

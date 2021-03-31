@@ -1,5 +1,5 @@
 import { LoginDto } from './../auth/dto/login.dto';
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 // Exception
@@ -19,6 +19,17 @@ export class UserService {
     @InjectRepository(UserRepository)
     private readonly _userRepository: UserRepository,
   ) {}
+
+  async getById(id: number) {
+    const user = await this._userRepository.findOne({ id });
+    if (user) {
+      return user;
+    }
+    throw new HttpException(
+      'User with this id does not exist',
+      HttpStatus.NOT_FOUND,
+    );
+  }
 
   findOne(user: LoginDto): Promise<User> {
     return this._userRepository.findOne({
@@ -40,6 +51,7 @@ export class UserService {
       });
       const newUser = await this._userRepository.save(user);
       delete newUser.password;
+
       return newUser;
     } else {
       throw new Conflict('Username or Email Already Exist!');
